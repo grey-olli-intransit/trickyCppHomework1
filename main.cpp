@@ -196,6 +196,7 @@ std::ostream & operator<<(std::ostream & stream, const struct PhoneNumber & phon
  * Реализуйте метод SortByPhone, который должен сортировать элементы контейнера по номерам
  * телефонов.
  * Используйте алгоритмическую функцию sort.
+ *
  * Реализуйте метод GetPhoneNumber, который принимает фамилию человека, а возвращает кортеж
  * из строки и PhoneNumber. Строка должна быть пустой, если найден ровно один человек с заданной
  * фамилией в списке. Если не найден ни один человек с заданной фамилией, то в строке должна быть
@@ -203,8 +204,6 @@ std::ostream & operator<<(std::ostream & stream, const struct PhoneNumber & phon
  * Реализуйте метод ChangePhoneNumber, который принимает человека и новый номер телефона и, если
  * находит заданного человека в контейнере, то меняет его номер телефона на новый, иначе ничего не делает.
  * */
-
-
 typedef std::pair<Person,PhoneNumber> PersonPhoneTuple;
 
 class PhoneBook {
@@ -212,6 +211,23 @@ class PhoneBook {
         std::vector<PersonPhoneTuple> phoneBook;
     public:
         friend std::ostream & operator<<(std::ostream & out, const PhoneBook & phoneBook);
+        std::tuple<std::string,PhoneNumber>  GetPhoneNumber(std::string const & SecondName) {
+            int found=0, found_index=0;
+            for(int index=0;index<phoneBook.size();index++) {
+                if(phoneBook.at(index).first.SecondName == SecondName){
+                    found++;
+                    found_index=index;
+                }
+            }
+            if (found) {
+                if(found > 1) {
+                    return std::make_tuple("found more than 1", phoneBook.at(found_index).second);
+                }
+                return std::make_tuple("", phoneBook.at(found_index).second);
+            }
+            PhoneNumber phone {0,0,"not found", std::nullopt};
+            return std::make_tuple("not found", phone);
+        }
         void SortByPhone() {
             std::sort(phoneBook.begin(),phoneBook.end(),
                       [](std::pair<const Person, const PhoneNumber> const & one,
@@ -291,6 +307,22 @@ int main() {
      book.SortByName();
      std::cout << book;
 
+     std::cout << "-----GetPhoneNumber-----" << std::endl;
+     // лямбда функция, которая принимает фамилию и выводит номер телефона этого        человека, либо строку с ошибкой
+     auto print_phone_number = [&book](const std::string& surname) {
+         std::cout << surname << "\t";
+         auto answer = book.GetPhoneNumber(surname);
+         if (std::get<0>(answer).empty())
+             std::cout << std::get<1>(answer);
+         else
+             std::cout << std::get<0>(answer);
+         std::cout << std::endl;
+     };
 
-    return 0;
+     // вызовы лямбды
+     print_phone_number("Ivanov");
+     print_phone_number("Petrov");
+
+
+     return 0;
 }
