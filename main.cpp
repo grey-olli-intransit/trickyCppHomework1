@@ -13,61 +13,37 @@
  * Перегрузите оператор вывода данных для этой структуры. Также перегрузите операторы < и == (используйте tie).
  * */
 struct Person {
+    std::string SecondName;
     std::string FirstName;
     std::optional<std::string> Patronymic;
-    std::string SecondName;
-    friend std::ostream & operator<<(std::ostream & stream, const struct Person & person);
-    friend bool operator==(struct Person const & person1,struct Person const & person2);
-    //friend bool operator<(struct Person const & person1, struct Person const & person2);
-    bool operator<(struct Person const & person2) const {
-        if (SecondName < person2.SecondName) // сначала Фамилии
-            return true;
-// Uncomenting two strings below does SYSSEGV fault
-//    else
-        if (FirstName < person2.FirstName)
-            return true;
-//    else
-        // Человек без отчества всегда меньше человека с отчеством
-        if (Patronymic.has_value() && ! person2.Patronymic.has_value())
-            return false;
-        else if(! Patronymic.has_value() && person2.Patronymic.has_value())
-            return true;
-        else if (! person2.Patronymic.has_value() && ! Patronymic.has_value()) {
-            if (SecondName < person2.SecondName) // сначала Фамилии
-                return true;
-            else if (FirstName < person2.FirstName)
-                return true;
-            else
-                return false;
-        }
-        else
-            return tie(SecondName,FirstName,Patronymic.value())
-                   < tie(person2.SecondName,person2.FirstName,person2.Patronymic.value());
+    friend std::ostream & operator<<(std::ostream & stream, const Person & person);
+    friend bool operator==(Person const & person1, Person const & person2);
+//    friend bool operator<(struct Person const & person1, struct Person const & person2);
+    bool operator<(Person const & person2) const {
+            return std::make_tuple(SecondName,FirstName,Patronymic.value_or(""))
+                   < std::make_tuple(person2.SecondName,person2.FirstName,person2.Patronymic.value_or(""));
 
     };
 };
 
 /*
-bool operator<(struct Person const & person1, struct Person const & person2) {
+bool operator<(Person const & person1, Person const & person2) {
     if (person1.SecondName < person2.SecondName) // сначала Фамилии
         return true;
-// Uncomenting two strings below does SYSSEGV fault
-//    else
+// Uncommenting two strings below does SIGSEGV fault
     if (person1.FirstName < person2.FirstName)
         return true;
-//    else
     // Человек без отчества всегда меньше человека с отчеством
     if (person1.Patronymic.has_value() && ! person2.Patronymic.has_value())
         return false;
-    else if(! person1.Patronymic.has_value() && person2.Patronymic.has_value())
+    if(! person1.Patronymic.has_value() && person2.Patronymic.has_value())
         return true;
-    else if (! person2.Patronymic.has_value() && ! person1.Patronymic.has_value()) {
+    if (! person2.Patronymic.has_value() && ! person1.Patronymic.has_value()) {
         if (person1.SecondName < person2.SecondName) // сначала Фамилии
             return true;
-        else if (person1.FirstName < person2.FirstName)
+        if (person1.FirstName < person2.FirstName)
             return true;
-        else
-            return false;
+        return false;
     }
     else
         return tie(person1.SecondName,person1.FirstName,person1.Patronymic.value())
@@ -75,28 +51,13 @@ bool operator<(struct Person const & person1, struct Person const & person2) {
 }
 */
 
-bool operator==(const struct Person & person1,const struct Person & person2) {
-    if (
-            person1.Patronymic.has_value() && !person2.Patronymic.has_value()
-            ||
-            person2.Patronymic.has_value() && !person1.Patronymic.has_value()
-        )
-        return false;
-    else if (! person2.Patronymic.has_value() && ! person1.Patronymic.has_value()) {
-        if (person1.FirstName == person2.FirstName && person1.SecondName == person2.SecondName)
-            return true;
-        else
-            return false;
-    }
-    else
-        return std::tie(person1.SecondName,person1.FirstName,person1.Patronymic.value())
-            == std::tie(person2.SecondName,person2.FirstName,person2.Patronymic.value());
+bool operator==(const Person & person1, const Person & person2) {
+   return std::make_tuple(person1.SecondName,person1.FirstName,person1.Patronymic.value_or(""))
+            == std::make_tuple(person2.SecondName,person2.FirstName,person2.Patronymic.value_or(""));
 }
 
-std::ostream & operator<<(std::ostream & stream, const struct Person & person) {
+std::ostream & operator<<(std::ostream & stream, const Person & person) {
      std::string toPrint;
-     /* toPrint = person.Patronymic.has_value() ? person.Patronymic.value() : ""; */
-     //stream << person.FirstName << " " << person.Patronymic.value_or("") << " " << person.SecondName ;
      stream << std::setw(12) << person.SecondName << std::setw(10) << person.FirstName
             << std::setw(18) << person.Patronymic.value_or("");
      return stream;
@@ -117,61 +78,38 @@ std::ostream & operator<<(std::ostream & stream, const struct Person & person) {
  * Также перегрузите операторы < и == (используйте tie)
  * */
 struct PhoneNumber {
-    int CountryCode;
-    int TownCode;
+    int CountryCode{};
+    int TownCode{};
     std::string Number;
     std::optional<int> LocalNumber;
-    friend std::ostream & operator<<(std::ostream & stream, const struct PhoneNumber & phoneNumber);
-    friend bool operator==(const struct PhoneNumber & phoneNumber1, const struct PhoneNumber & phoneNumber2);
-    friend bool operator<(const struct PhoneNumber & phoneNumber1, const struct PhoneNumber & phoneNumber2);
+    friend std::ostream & operator<<(std::ostream & stream, const PhoneNumber & phoneNumber);
+    friend bool operator==(const PhoneNumber & phoneNumber1, const PhoneNumber & phoneNumber2);
+    friend bool operator<(const PhoneNumber & phoneNumber1, const PhoneNumber & phoneNumber2);
 };
 
-bool operator==(const struct PhoneNumber & phoneNumber1, const struct PhoneNumber & phoneNumber2) {
-    if( phoneNumber1.LocalNumber.has_value() && ! phoneNumber2.LocalNumber.has_value()
-       ||
-       ! phoneNumber1.LocalNumber.has_value() && phoneNumber2.LocalNumber.has_value()
-    )
-        return false;
-    else if (!phoneNumber1.LocalNumber.has_value() && ! phoneNumber2.LocalNumber.has_value())
-    {
-        return std::make_tuple(phoneNumber1.CountryCode, phoneNumber1.TownCode, phoneNumber1.Number)
-        == std::make_tuple(phoneNumber2.CountryCode, phoneNumber2.TownCode, phoneNumber2.Number);
-    }
-    else
-        return std::tie(phoneNumber1.CountryCode,
+bool operator==(const PhoneNumber & phoneNumber1, const PhoneNumber & phoneNumber2) {
+    return std::make_tuple(phoneNumber1.CountryCode,
                         phoneNumber1.TownCode,
                         phoneNumber1.Number,
-                        phoneNumber1.LocalNumber.value()) ==
-               std::tie(phoneNumber2.CountryCode,
+                        phoneNumber1.LocalNumber.value_or(0)) ==
+           std::make_tuple(phoneNumber2.CountryCode,
                         phoneNumber2.TownCode,
                         phoneNumber2.Number,
-                        phoneNumber2.LocalNumber.value());
+                        phoneNumber2.LocalNumber.value_or(0));
 }
 
-bool operator<(const struct PhoneNumber & phoneNumber1, const struct PhoneNumber & phoneNumber2) {
-    // Тут если у человека есть локальный номер, то его суммарный номер считается наибольшим.
-    // По-хорошему надо всё приводить к строке, но тогда ни к чему будет std::tie.
-    if( phoneNumber1.LocalNumber.has_value() && ! phoneNumber2.LocalNumber.has_value() )
-        return false;
-    else if (! phoneNumber1.LocalNumber.has_value() && phoneNumber2.LocalNumber.has_value() )
-        return true;
-    else if (!phoneNumber1.LocalNumber.has_value() && ! phoneNumber2.LocalNumber.has_value())
-    {
-        return std::make_tuple(phoneNumber1.CountryCode, phoneNumber1.TownCode, phoneNumber1.Number)
-               < std::make_tuple(phoneNumber2.CountryCode, phoneNumber2.TownCode, phoneNumber2.Number);
-    }
-    else
-        return std::tie(phoneNumber1.CountryCode,
+bool operator<(const PhoneNumber & phoneNumber1, const PhoneNumber & phoneNumber2) {
+        return std::make_tuple(phoneNumber1.CountryCode,
                         phoneNumber1.TownCode,
                         phoneNumber1.Number,
-                        phoneNumber1.LocalNumber.value()) <
-               std::tie(phoneNumber2.CountryCode,
+                        phoneNumber1.LocalNumber.value_or(0)) <
+               std::make_tuple(phoneNumber2.CountryCode,
                         phoneNumber2.TownCode,
                         phoneNumber2.Number,
-                        phoneNumber2.LocalNumber.value());
+                        phoneNumber2.LocalNumber.value_or(0));
 }
 
-std::ostream & operator<<(std::ostream & stream, const struct PhoneNumber & phoneNumber) {
+std::ostream & operator<<(std::ostream & stream, const PhoneNumber & phoneNumber) {
     std::string toPrint;
     stream << "+" << phoneNumber.CountryCode << "(" << phoneNumber.TownCode <<  ")"
         << phoneNumber.Number ;
@@ -201,6 +139,7 @@ std::ostream & operator<<(std::ostream & stream, const struct PhoneNumber & phon
  * из строки и PhoneNumber. Строка должна быть пустой, если найден ровно один человек с заданной
  * фамилией в списке. Если не найден ни один человек с заданной фамилией, то в строке должна быть
  * запись «not found», если было найдено больше одного человека, то в строке должно быть «found more than 1».
+ *
  * Реализуйте метод ChangePhoneNumber, который принимает человека и новый номер телефона и, если
  * находит заданного человека в контейнере, то меняет его номер телефона на новый, иначе ничего не делает.
  * */
@@ -211,6 +150,16 @@ class PhoneBook {
         std::vector<PersonPhoneTuple> phoneBook;
     public:
         friend std::ostream & operator<<(std::ostream & out, const PhoneBook & phoneBook);
+        void ChangePhoneNumber(const Person & personToAlter, const PhoneNumber & phoneNumber ) {
+            for(auto index{0};index<phoneBook.size();index++) {
+                PersonPhoneTuple pair = phoneBook.at(index);
+                if(pair.first == personToAlter) {
+                    std::cout << "Found person to alter:" << pair.first << "\n";
+                    pair.second = phoneNumber;
+                    phoneBook.at(index) = pair;
+                }
+            }
+        }
         std::tuple<std::string,PhoneNumber>  GetPhoneNumber(std::string const & SecondName) {
             int found=0, found_index=0;
             for(int index=0;index<phoneBook.size();index++) {
@@ -240,7 +189,7 @@ class PhoneBook {
                    std::pair<Person, PhoneNumber> const & two) -> bool {
                         return (one.first < two.first);});
         }
-        PhoneBook(std::ifstream & phb_file) {
+        explicit PhoneBook(std::ifstream & phb_file) {
             //Ilin Petr Artemovich 7 17 4559767 -
             //Solovev Ivan Vladimirovich 7 273 5699819 5543
             //Makeev Marat - 77 4521 8880876 999
@@ -263,8 +212,8 @@ class PhoneBook {
                     phone.LocalNumber = std::nullopt;
                 else
                     phone.LocalNumber = std::stoi(LocalNumberCandidate);
-                if(person.FirstName != "") // last line is single \n initializes w/ "" all vars.
-                   phoneBook.push_back(std::make_pair(person,phone));
+                if(! person.FirstName.empty()) // last line is single \n may initialize w/ "" all vars.
+                   phoneBook.emplace_back(std::make_pair(person,phone));
             }
             phb_file.close();
         };
@@ -274,8 +223,8 @@ class PhoneBook {
 std::ostream & operator<<(std::ostream & out, const PhoneBook &phoneBook) {
     Person person;
     PhoneNumber phone;
-    for(int index=0;index<phoneBook.phoneBook.size();index++) {
-        std::tie(person, phone) = phoneBook.phoneBook.at(index);
+    for(const auto & index : phoneBook.phoneBook) {
+        std::tie(person, phone) = index;
         out << person  << std::setw(10) << " " << phone << std::endl;
     }
     return out;
@@ -283,11 +232,10 @@ std::ostream & operator<<(std::ostream & out, const PhoneBook &phoneBook) {
 
 
 int main() {
-     /*
      Person person1 {"Ilin","Petr","Artemovich"};
-     Person person2 {"Zaitsev", "Zakhar", "Artemovich"};
-     std::cout << "\n=============\n" << ( person1 < person2 ) << "=============\n" ;
-     */
+     Person person2 {"Ilin","Petr","Artemovich"};
+     std::cout << "\n=============\n" << (( person1 == person2 ) ? "Equal.":"not equal.") << "\n=============\n" ;
+
      std::ifstream file;
      try {
         file.open("../PhoneBook.txt",std::_S_in); // путь к файлу PhoneBook.txt
@@ -308,7 +256,8 @@ int main() {
      std::cout << book;
 
      std::cout << "-----GetPhoneNumber-----" << std::endl;
-     // лямбда функция, которая принимает фамилию и выводит номер телефона этого        человека, либо строку с ошибкой
+     // лямбда функция, которая принимает фамилию и выводит номер телефона этого человека,
+     // либо строку с ошибкой
      auto print_phone_number = [&book](const std::string& surname) {
          std::cout << surname << "\t";
          auto answer = book.GetPhoneNumber(surname);
@@ -323,6 +272,15 @@ int main() {
      print_phone_number("Ivanov");
      print_phone_number("Petrov");
 
-
+     std::cout << "----ChangePhoneNumber----" << std::endl;
+     book.ChangePhoneNumber(
+            Person{ "Kotov", "Vasilii", "Eliseevich" },
+            PhoneNumber{7, 123, "15344458", std::nullopt}
+            );
+     book.ChangePhoneNumber(
+            Person{ "Mironova", "Margarita", "Vladimirovna" },
+            PhoneNumber{ 16, 465, "9155448", 13 }
+            );
+     std::cout << book;
      return 0;
 }
