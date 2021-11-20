@@ -1,4 +1,4 @@
-----> 16:44:05 Sat Nov 20 olli@dell15 ~/CLionProjects/trickyCPP/homework1/cmake-build-debug
+----> 20:16:20 Sat Nov 20 olli@dell15 ~/CLionProjects/trickyCPP/homework1/cmake-build-debug
 $ ./homework1 
 
 =============
@@ -26,11 +26,9 @@ Equal.
  Aleksandrov   Georgii                            +493(7637)6114861
      Solovev      Alex         Ivanovich          +4(940)2556793
      Solovev    Sergey                            +5(123)1231211
-     Solovev    Sergey                            +5(123)1231211
 ------SortByPhone-------
      Solovev     Artur      Mikhailovich          +4(940)2556793
      Solovev      Alex         Ivanovich          +4(940)2556793
-     Solovev    Sergey                            +5(123)1231211
      Solovev    Sergey                            +5(123)1231211
         Ilin      Petr        Artemovich          +7(17)4559767
    Kuznetsov    Kirill       Kirillovich          +7(17)8346563
@@ -72,12 +70,12 @@ Equal.
      Solovev     Artur      Mikhailovich          +4(940)2556793
      Solovev      Ivan     Vladimirovich          +7(273)5699819 5543
      Solovev    Sergey                            +5(123)1231211
-     Solovev    Sergey                            +5(123)1231211
       Titova   Natalia                            +93(163)1992257 9
      Zaitsev    Zakhar        Artemovich          +125(44)4164751
 -----GetPhoneNumber-----
 Ivanov	+7(366)7508887
 Petrov	not found
+Solovev	found more than 1
 ----ChangePhoneNumber----
 Found person to alter:       Kotov   Vasilii        Eliseevich
  Aleksandrov   Georgii                            +493(7637)6114861
@@ -100,9 +98,7 @@ Found person to alter:       Kotov   Vasilii        Eliseevich
      Solovev     Artur      Mikhailovich          +4(940)2556793
      Solovev      Ivan     Vladimirovich          +7(273)5699819 5543
      Solovev    Sergey                            +5(123)1231211
-     Solovev    Sergey                            +5(123)1231211
       Titova   Natalia                            +93(163)1992257 9
      Zaitsev    Zakhar        Artemovich          +125(44)4164751
-----> 16:44:09 Sat Nov 20 olli@dell15 ~/CLionProjects/trickyCPP/homework1/cmake-build-debug
-$ 
-
+----> 20:40:39 Sat Nov 20 olli@dell15 ~/CLionProjects/trickyCPP/homework1/cmake-build-debug
+$
