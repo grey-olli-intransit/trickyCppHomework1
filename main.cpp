@@ -6,6 +6,7 @@
 #include <vector>
 #include <iomanip>
 #include <algorithm>
+#include <sstream>
 
 /*
  * Создайте структуру Person с 3 полями: фамилия, имя, отчество.
@@ -195,25 +196,27 @@ class PhoneBook {
             //Makeev Marat - 77 4521 8880876 999
             Person person;
             PhoneNumber phone;
-            std::string PatronymicCandidate,LocalNumberCandidate;
-            while (! phb_file.eof() ) {
-                phb_file >> person.SecondName
+            std::string PatronymicCandidate,LocalNumberCandidate,line;
+            while (std::getline(phb_file,line) ) {
+                std::istringstream strstream(line);
+                if (strstream >> person.SecondName
                          >> person.FirstName
                          >> PatronymicCandidate
                          >> phone.CountryCode
                          >> phone.TownCode
                          >> phone.Number
-                         >> LocalNumberCandidate;
-                if (PatronymicCandidate == "-")
-                    person.Patronymic = std::nullopt;
-                else
-                    person.Patronymic = PatronymicCandidate;
-                if (LocalNumberCandidate == "-")
-                    phone.LocalNumber = std::nullopt;
-                else
-                    phone.LocalNumber = std::stoi(LocalNumberCandidate);
-                if(! person.FirstName.empty()) // last line is single \n may initialize w/ "" all vars.
-                   phoneBook.emplace_back(std::make_pair(person,phone));
+                         >> LocalNumberCandidate
+                    ) {
+                        if (PatronymicCandidate == "-")
+                            person.Patronymic = std::nullopt;
+                        else
+                            person.Patronymic = PatronymicCandidate;
+                        if (LocalNumberCandidate == "-")
+                            phone.LocalNumber = std::nullopt;
+                        else
+                            phone.LocalNumber = std::stoi(LocalNumberCandidate);
+                        phoneBook.emplace_back(std::make_pair(person,phone));
+                }
             }
             phb_file.close();
         };
@@ -241,7 +244,11 @@ int main() {
         file.open("../PhoneBook.txt",std::_S_in); // путь к файлу PhoneBook.txt
      }
      catch (...) {
-         std::cout << "Unable to open file.";
+         std::cout << "Unable to open file.\n";
+         return 1;
+     }
+     if (! file.is_open()) {
+         std::cout << "Unable to open file!\n";
          return 1;
      }
      PhoneBook book(file);
@@ -271,6 +278,7 @@ int main() {
      // вызовы лямбды
      print_phone_number("Ivanov");
      print_phone_number("Petrov");
+     print_phone_number("Solovev");
 
      std::cout << "----ChangePhoneNumber----" << std::endl;
      book.ChangePhoneNumber(
