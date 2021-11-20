@@ -1,0 +1,104 @@
+----> 20:16:20 Sat Nov 20 olli@dell15 ~/CLionProjects/trickyCPP/homework1/cmake-build-debug
+$ ./homework1 
+
+=============
+Equal.
+=============
+        Ilin      Petr        Artemovich          +7(17)4559767
+     Zaitsev    Zakhar        Artemovich          +125(44)4164751
+     Dubinin   Aleksei      Mikhailovich          +7(473)7449054
+     Solovev     Artur      Mikhailovich          +4(940)2556793
+   Gerasimov  Miroslav    Stanislavovich          +7(367)7508887
+      Makeev     Marat                            +77(4521)8880876 999
+     Solovev      Ivan     Vladimirovich          +7(273)5699819 5543
+      Egorov   Savelii    Stanislavovich          +77(4521)8880876 99
+     Sokolov   Arsenii                            +93(163)1992257 16
+     Davydov    Filipp       Grigorevich          +7(247)1377660
+     Morozov  Vladimir      Mikhailovich          +37(2290)5613649
+     Orekhov    Matvei         Petrovich          +81(8281)7420182 2
+      Titova   Natalia                            +93(163)1992257 9
+    Markelov   Dmitrii        Vadimovich          +19(7576)5734416 2
+  Kozlovskii     Artem       Daniilovich          +81(8281)7420182 1
+   Kuznetsov    Kirill       Kirillovich          +7(17)8346563
+    Mironova Margarita     Aleksandrovna          +7(273)5699819 5542
+       Kotov   Vasilii        Eliseevich          +7(367)7508888
+      Ivanov    Daniil       Maksimovich          +7(366)7508887
+ Aleksandrov   Georgii                            +493(7637)6114861
+     Solovev      Alex         Ivanovich          +4(940)2556793
+     Solovev    Sergey                            +5(123)1231211
+------SortByPhone-------
+     Solovev     Artur      Mikhailovich          +4(940)2556793
+     Solovev      Alex         Ivanovich          +4(940)2556793
+     Solovev    Sergey                            +5(123)1231211
+        Ilin      Petr        Artemovich          +7(17)4559767
+   Kuznetsov    Kirill       Kirillovich          +7(17)8346563
+     Davydov    Filipp       Grigorevich          +7(247)1377660
+    Mironova Margarita     Aleksandrovna          +7(273)5699819 5542
+     Solovev      Ivan     Vladimirovich          +7(273)5699819 5543
+      Ivanov    Daniil       Maksimovich          +7(366)7508887
+   Gerasimov  Miroslav    Stanislavovich          +7(367)7508887
+       Kotov   Vasilii        Eliseevich          +7(367)7508888
+     Dubinin   Aleksei      Mikhailovich          +7(473)7449054
+    Markelov   Dmitrii        Vadimovich          +19(7576)5734416 2
+     Morozov  Vladimir      Mikhailovich          +37(2290)5613649
+      Egorov   Savelii    Stanislavovich          +77(4521)8880876 99
+      Makeev     Marat                            +77(4521)8880876 999
+  Kozlovskii     Artem       Daniilovich          +81(8281)7420182 1
+     Orekhov    Matvei         Petrovich          +81(8281)7420182 2
+      Titova   Natalia                            +93(163)1992257 9
+     Sokolov   Arsenii                            +93(163)1992257 16
+     Zaitsev    Zakhar        Artemovich          +125(44)4164751
+ Aleksandrov   Georgii                            +493(7637)6114861
+------SortByName--------
+ Aleksandrov   Georgii                            +493(7637)6114861
+     Davydov    Filipp       Grigorevich          +7(247)1377660
+     Dubinin   Aleksei      Mikhailovich          +7(473)7449054
+      Egorov   Savelii    Stanislavovich          +77(4521)8880876 99
+   Gerasimov  Miroslav    Stanislavovich          +7(367)7508887
+        Ilin      Petr        Artemovich          +7(17)4559767
+      Ivanov    Daniil       Maksimovich          +7(366)7508887
+       Kotov   Vasilii        Eliseevich          +7(367)7508888
+  Kozlovskii     Artem       Daniilovich          +81(8281)7420182 1
+   Kuznetsov    Kirill       Kirillovich          +7(17)8346563
+      Makeev     Marat                            +77(4521)8880876 999
+    Markelov   Dmitrii        Vadimovich          +19(7576)5734416 2
+    Mironova Margarita     Aleksandrovna          +7(273)5699819 5542
+     Morozov  Vladimir      Mikhailovich          +37(2290)5613649
+     Orekhov    Matvei         Petrovich          +81(8281)7420182 2
+     Sokolov   Arsenii                            +93(163)1992257 16
+     Solovev      Alex         Ivanovich          +4(940)2556793
+     Solovev     Artur      Mikhailovich          +4(940)2556793
+     Solovev      Ivan     Vladimirovich          +7(273)5699819 5543
+     Solovev    Sergey                            +5(123)1231211
+      Titova   Natalia                            +93(163)1992257 9
+     Zaitsev    Zakhar        Artemovich          +125(44)4164751
+-----GetPhoneNumber-----
+Ivanov	+7(366)7508887
+Petrov	not found
+Solovev	found more than 1
+----ChangePhoneNumber----
+Found person to alter:       Kotov   Vasilii        Eliseevich
+ Aleksandrov   Georgii                            +493(7637)6114861
+     Davydov    Filipp       Grigorevich          +7(247)1377660
+     Dubinin   Aleksei      Mikhailovich          +7(473)7449054
+      Egorov   Savelii    Stanislavovich          +77(4521)8880876 99
+   Gerasimov  Miroslav    Stanislavovich          +7(367)7508887
+        Ilin      Petr        Artemovich          +7(17)4559767
+      Ivanov    Daniil       Maksimovich          +7(366)7508887
+       Kotov   Vasilii        Eliseevich          +7(123)15344458
+  Kozlovskii     Artem       Daniilovich          +81(8281)7420182 1
+   Kuznetsov    Kirill       Kirillovich          +7(17)8346563
+      Makeev     Marat                            +77(4521)8880876 999
+    Markelov   Dmitrii        Vadimovich          +19(7576)5734416 2
+    Mironova Margarita     Aleksandrovna          +7(273)5699819 5542
+     Morozov  Vladimir      Mikhailovich          +37(2290)5613649
+     Orekhov    Matvei         Petrovich          +81(8281)7420182 2
+     Sokolov   Arsenii                            +93(163)1992257 16
+     Solovev      Alex         Ivanovich          +4(940)2556793
+     Solovev     Artur      Mikhailovich          +4(940)2556793
+     Solovev      Ivan     Vladimirovich          +7(273)5699819 5543
+     Solovev    Sergey                            +5(123)1231211
+      Titova   Natalia                            +93(163)1992257 9
+     Zaitsev    Zakhar        Artemovich          +125(44)4164751
+----> 20:40:39 Sat Nov 20 olli@dell15 ~/CLionProjects/trickyCPP/homework1/cmake-build-debug
+$
